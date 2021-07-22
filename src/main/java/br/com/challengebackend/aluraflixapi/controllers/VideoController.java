@@ -50,4 +50,17 @@ public class VideoController {
         var videoResponse = videoMapper.convertToResponse(video);
         return ResponseEntity.ok(videoResponse);
     }
+
+    @PutMapping("/{videoId}")
+    public ResponseEntity<VideoResponse> updateVideo(@PathVariable UUID videoId, @Valid @RequestBody VideoRequest videoRequest) {
+        var video = videoService.updateVideo(videoId, videoRequest);
+        var videoResponse = videoMapper.convertToResponse(video);
+        return ResponseEntity.ok(videoResponse);
+    }
+
+    @DeleteMapping("/{videoId}")
+    public ResponseEntity<Void> deleteVideo(@PathVariable UUID videoId) {
+        videoService.deleteVideo(videoId);
+        return ResponseEntity.ok().build();
+    }
 }
