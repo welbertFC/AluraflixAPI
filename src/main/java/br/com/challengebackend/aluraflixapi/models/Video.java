@@ -15,8 +15,8 @@ import java.util.UUID;
 public class Video {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
+
     private String title;
     private String description;
     private String url;
