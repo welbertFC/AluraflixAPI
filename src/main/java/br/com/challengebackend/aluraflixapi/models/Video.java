@@ -1,6 +1,8 @@
 package br.com.challengebackend.aluraflixapi.models;
 
 import br.com.challengebackend.aluraflixapi.dto.VideoRequest;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +15,9 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Video {
 

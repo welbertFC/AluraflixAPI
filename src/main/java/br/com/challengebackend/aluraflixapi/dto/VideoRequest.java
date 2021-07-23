@@ -1,6 +1,5 @@
 package br.com.challengebackend.aluraflixapi.dto;
 
-
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
