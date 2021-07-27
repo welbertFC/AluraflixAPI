@@ -1,7 +1,11 @@
 package br.com.challengebackend.aluraflixapi.models;
 
+import br.com.challengebackend.aluraflixapi.dto.CategoryRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,6 +20,9 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Category {
 
@@ -24,6 +31,7 @@ public class Category {
     private String title;
     private String color;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Video> videos;
 
@@ -33,7 +41,14 @@ public class Category {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    public void generateId(){
+    public Category(Category category, CategoryRequest categoryRequest) {
+        this.id = category.getId();
+        this.title = categoryRequest.getTitle();
+        this.color = categoryRequest.getColor();
+        this.createDateTime = category.getCreateDateTime();
+    }
+
+    public void generateId() {
         this.id = UUID.randomUUID();
     }
 }
