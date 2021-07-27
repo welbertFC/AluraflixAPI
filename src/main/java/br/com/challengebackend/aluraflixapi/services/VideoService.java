@@ -17,7 +17,16 @@ public class VideoService {
     @Autowired
     private VideoRepository videoRepository;
 
-    public Video createVideo(Video video) {
+    @Autowired
+    private CategoryService categoryService;
+
+    public Video createVideo(Video video, UUID idCategory) {
+        if (idCategory == null) {
+            video.setCategory(categoryService.findCategoryById(
+                    UUID.fromString("8ad8cc39-9feb-4817-a004-5a40d5efed51")));
+        } else {
+            video.setCategory(categoryService.findCategoryById(idCategory));
+        }
         video.generateId();
         return videoRepository.save(video);
     }
@@ -27,16 +36,26 @@ public class VideoService {
     }
 
     public Video findVideoById(UUID videoId) {
-        return videoRepository.findById(videoId).orElseThrow(() -> new ObjectNotFoundException());
+        return videoRepository.findById(videoId).orElseThrow(
+                () -> new ObjectNotFoundException());
     }
 
     public Video updateVideo(UUID videoId, VideoRequest videoRequest) {
         var video = findVideoById(videoId);
-        return videoRepository.save(new Video(video, videoRequest));
+        return videoRepository.save(
+                new Video(video, videoRequest));
     }
 
     public void deleteVideo(UUID videoId) {
         var video = findVideoById(videoId);
         videoRepository.delete(video);
+    }
+
+    public Page<Video> findAllVideoByCategory(UUID IdCategory, Pageable pageable) {
+        return videoRepository.findAllByCategoryId(IdCategory, pageable);
+    }
+
+    public Page<Video> findAllVideosByTitle(String title, Pageable pageable) {
+        return videoRepository.findVideoByTitleContains(title, pageable);
     }
 }

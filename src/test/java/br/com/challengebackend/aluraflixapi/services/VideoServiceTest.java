@@ -2,7 +2,9 @@ package br.com.challengebackend.aluraflixapi.services;
 
 import br.com.challengebackend.aluraflixapi.dto.VideoRequest;
 import br.com.challengebackend.aluraflixapi.exception.ObjectNotFoundException;
+import br.com.challengebackend.aluraflixapi.models.Category;
 import br.com.challengebackend.aluraflixapi.models.Video;
+import br.com.challengebackend.aluraflixapi.repository.CategoryRepository;
 import br.com.challengebackend.aluraflixapi.repository.VideoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +29,9 @@ public class VideoServiceTest {
 
     @Mock
     private VideoRepository videoRepository;
+
+    @Mock
+    private CategoryService categoryService;
 
 
     @Test
@@ -57,11 +62,13 @@ public class VideoServiceTest {
 
     @Test
     void shouldCreatedNewVideo() {
-        var video = Video.builder().build();
+        var category = Category.builder().id(randomUUID()).build();
+        var video = Video.builder().id(randomUUID()).category(category).build();
         Mockito.when(videoRepository.save(video)).thenReturn(video);
-        var result = videoService.createVideo(video);
+        Mockito.when(categoryService.findCategoryById(category.getId())).thenReturn(category);
+        var result = videoService.createVideo(video, category.getId());
 
-        assertEquals(result, video);
+        assertThat(result.getId(), is(video.getId()));
     }
 
     @Test
@@ -88,20 +95,4 @@ public class VideoServiceTest {
         assertThat(result.getDescription(), is(videoRequest.getDescription()));
 
     }
-
-//    @Test
-//    void shouldAllVideo(Pageable pageable) {
-//        var video = Video.builder().id(randomUUID()).build();
-//        var video2 = Video.builder().id(randomUUID()).build();
-//        var video3 = Video.builder().id(randomUUID()).build();
-//        var listVideo = new ArrayList<Video>();
-//        listVideo.add(video);
-//        listVideo.add(video2);
-//        listVideo.add(video3);
-//
-//        Mockito.when(videoRepository.findAll(pageable)).thenReturn((Page<Video>) listVideo);
-//        var result = videoService.findAllVideos(pageable);
-//
-//        assertThat(result.getSize(), is(2));
-//    }
 }

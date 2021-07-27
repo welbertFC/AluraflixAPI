@@ -26,7 +26,7 @@ public class VideoController {
 
     @PostMapping
     public ResponseEntity<VideoResponse> create(@Valid @RequestBody VideoRequest videoRequest) {
-        var video = videoService.createVideo(videoMapper.convertToModel(videoRequest));
+        var video = videoService.createVideo(videoMapper.convertToModel(videoRequest), videoRequest.getCategory());
         var videoResponse = videoMapper.convertToResponse(video);
         var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
@@ -38,10 +38,16 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<VideoResponse>> findAll(Pageable pageable) {
-        var videos = videoService.findAllVideos(pageable);
-        var videoResponse = videos.map(obj -> videoMapper.convertToResponse(obj));
-        return ResponseEntity.ok(videoResponse);
+    public ResponseEntity<Page<VideoResponse>> findAll(
+            @RequestParam(value = "title", defaultValue = "") String title, Pageable pageable) {
+        if (title == null || title.isEmpty()) {
+            return ResponseEntity.ok(videoService.findAllVideos(pageable)
+                    .map(obj -> videoMapper.convertToResponse(obj)));
+        } else {
+            return ResponseEntity.ok(videoService.findAllVideosByTitle(title, pageable)
+                    .map(obj -> videoMapper.convertToResponse(obj)));
+        }
+
     }
 
     @GetMapping("/{videoId}")
@@ -52,7 +58,9 @@ public class VideoController {
     }
 
     @PutMapping("/{videoId}")
-    public ResponseEntity<VideoResponse> updateVideo(@PathVariable UUID videoId, @Valid @RequestBody VideoRequest videoRequest) {
+    public ResponseEntity<VideoResponse> updateVideo(
+            @PathVariable UUID videoId,
+            @Valid @RequestBody VideoRequest videoRequest) {
         var video = videoService.updateVideo(videoId, videoRequest);
         var videoResponse = videoMapper.convertToResponse(video);
         return ResponseEntity.ok(videoResponse);
@@ -63,4 +71,5 @@ public class VideoController {
         videoService.deleteVideo(videoId);
         return ResponseEntity.ok().build();
     }
+
 }
