@@ -28,8 +28,11 @@ public class Video {
     private String description;
     private String url;
 
+    @ManyToOne
+    private Category category;
+
     @CreatedDate
-    private LocalDateTime localDateTime;
+    private LocalDateTime createDateTime;
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
@@ -40,7 +43,7 @@ public class Video {
         this.title = videoRequest.getTitle();
         this.description = videoRequest.getDescription();
         this.url = videoRequest.getUrl();
-        this.localDateTime = video.getLocalDateTime();
+        this.createDateTime = video.getCreateDateTime();
     }
 
     public void generateId() {
