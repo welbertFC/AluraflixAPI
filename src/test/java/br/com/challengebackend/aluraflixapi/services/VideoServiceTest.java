@@ -62,7 +62,6 @@ public class VideoServiceTest {
         }
 
         assertThrows(ObjectNotFoundException.class, () -> videoService.findVideoById(randomUUID()));
-
     }
 
     @Test
@@ -155,7 +154,6 @@ public class VideoServiceTest {
         var result = videoService.findAllVideoByCategory(id, pageable);
 
         assertThat(result.getSize(), is(3));
-
     }
 
     @Test
@@ -176,7 +174,6 @@ public class VideoServiceTest {
 
         assertThat(result.getSize(), is(2));
         assertEquals(result.iterator().next().getTitle(), "test");
-
     }
 
     @Test
@@ -190,8 +187,5 @@ public class VideoServiceTest {
         videoService.deleteVideo(id);
 
         Mockito.verify(videoRepository, Mockito.times(1)).delete(video);
-
     }
-
-
 }
