@@ -6,9 +6,14 @@ Let's check it out my project.
 
 ### Code quality
 
-<a href="https://codebeat.co/projects/github-com-welbertfc-aluraflixapi-develop">
- <img alt="codebeat badge" src="https://codebeat.co/badges/18e7cfe3-7035-4836-aac4-c97a3109d6bb" />
-</a>
+
+
+ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=welbertFC_AluraflixAPI&metric=alert_status)](https://sonarcloud.io/dashboard?id=welbertFC_AluraflixAPI)
+ [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=welbertFC_AluraflixAPI&metric=coverage)](https://sonarcloud.io/dashboard?id=welbertFC_AluraflixAPI)
+ ![build](https://github.com/welbertFC/AluraflixAPI/actions/workflows/build.yml/badge.svg)
+  <img alt="codebeat badge" src="https://codebeat.co/badges/18e7cfe3-7035-4836-aac4-c97a3109d6bb" />
+ 
+
 
 ## Tecnologias utilizadas
 
