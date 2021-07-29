@@ -6,6 +6,10 @@ plugins {
     id 'java'
 }
 
+jacoco {
+    toolVersion = "0.8.5"
+}
+
 sonarqube {
     properties {
         property "sonar.projectKey", "welbertFC_AluraflixAPI"
@@ -41,11 +45,13 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 test {
-    finalizedBy jacocoTestReport
+    useJUnitPlatform()
 }
+
 jacocoTestReport {
     reports {
         xml.enabled true
