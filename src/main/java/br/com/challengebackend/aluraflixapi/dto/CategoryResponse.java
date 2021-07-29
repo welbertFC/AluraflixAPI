@@ -7,13 +7,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class VideoResponse {
+public class CategoryResponse {
 
     private UUID id;
     private String title;
-    private String description;
-    private String url;
-    private UUID category;
+    private String color;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createDateTime;
