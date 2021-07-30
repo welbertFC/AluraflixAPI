@@ -15,7 +15,7 @@ Let's check it out my project.
  
 
 
-## Tecnologias utilizadas
+## Technologies used
 
 <div style="display: inline_block"><br>
   <img align="center" alt="New-Jv" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg">
