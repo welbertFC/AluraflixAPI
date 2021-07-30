@@ -1,24 +1,9 @@
 plugins {
-    id 'application'
     id 'jacoco'
     id "org.sonarqube" version "3.3"
     id 'org.springframework.boot' version '2.5.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-}
-
-application {
-    mainClass = 'org.gradle.MyMain'
-}
-
-
-jacoco {
-    applyTo run
-}
-
-tasks.register('applicationCodeCoverageReport', JacocoReport) {
-    executionData run
-    sourceSets sourceSets.main
 }
 
 sonarqube {
@@ -28,6 +13,7 @@ sonarqube {
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
+
 
 
 group = 'br.com.ChallengeBackEnd'
@@ -65,8 +51,11 @@ test {
 
 jacocoTestReport {
     reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        xml.enabled true
     }
+}
+test.finalizedBy jacocoTestReport
+
+tasks.named('sonarqube').configure {
+    dependsOn test
 }
