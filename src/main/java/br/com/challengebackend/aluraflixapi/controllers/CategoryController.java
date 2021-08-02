@@ -23,22 +23,18 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     private final VideoService videoService;
-    private final CategoryMapper categoryMapper;
-    private final VideoMapper videoMapper;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, VideoService videoService, CategoryMapper categoryMapper, VideoMapper videoMapper) {
+    public CategoryController(CategoryService categoryService, VideoService videoService) {
         this.categoryService = categoryService;
         this.videoService = videoService;
-        this.categoryMapper = categoryMapper;
-        this.videoMapper = videoMapper;
     }
 
     @PostMapping
     public ResponseEntity<CategoryResponse> insertCategory(
             @Valid @RequestBody CategoryRequest categoryRequest) {
-        var category = categoryService.createCategory(categoryMapper.convertToModel(categoryRequest));
-        var categoryResponse = categoryMapper.convertToResponse(category);
+        var category = categoryService.createCategory(CategoryMapper.convertToModel(categoryRequest));
+        var categoryResponse = CategoryMapper.convertToResponse(category);
         var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/{Id}")
@@ -51,7 +47,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<Page<CategoryResponse>> findAll(Pageable pageable) {
         var category = categoryService.findAllCategory(pageable);
-        var categoryResponse = category.map(categoryMapper::convertToResponse);
+        var categoryResponse = category.map(CategoryMapper::convertToResponse);
         return ResponseEntity.ok(categoryResponse);
     }
 
@@ -59,15 +55,15 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> findById(
             @PathVariable UUID idCategory) {
         var category = categoryService.findCategoryById(idCategory);
-        var categoryResponse = categoryMapper.convertToResponse(category);
+        var categoryResponse = CategoryMapper.convertToResponse(category);
         return ResponseEntity.ok(categoryResponse);
     }
 
     @PutMapping("/{idCategory}")
     public ResponseEntity<CategoryResponse> update(@Valid @RequestBody CategoryRequest categoryRequest,
                                                    @PathVariable UUID idCategory) {
-        var category = categoryService.updateCategory(idCategory, categoryMapper.convertToModel(categoryRequest));
-        var categoryResponse = categoryMapper.convertToResponse(category);
+        var category = categoryService.updateCategory(idCategory, CategoryMapper.convertToModel(categoryRequest));
+        var categoryResponse = CategoryMapper.convertToResponse(category);
         return ResponseEntity.ok(categoryResponse);
     }
 
@@ -81,7 +77,7 @@ public class CategoryController {
     public ResponseEntity<Page<VideoResponse>> findAllByCategory(
             @PathVariable UUID idCategory, Pageable pageable) {
         var videos = videoService.findAllVideoByCategory(idCategory, pageable);
-        var videoResponse = videos.map(videoMapper::convertToResponse);
+        var videoResponse = videos.map(VideoMapper::convertToResponse);
         return ResponseEntity.ok(videoResponse);
 
     }
