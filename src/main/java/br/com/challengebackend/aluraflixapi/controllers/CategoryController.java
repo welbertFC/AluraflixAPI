@@ -51,7 +51,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<Page<CategoryResponse>> findAll(Pageable pageable) {
         var category = categoryService.findAllCategory(pageable);
-        var categoryResponse = category.map(obj -> categoryMapper.convertToResponse(obj));
+        var categoryResponse = category.map(categoryMapper::convertToResponse);
         return ResponseEntity.ok(categoryResponse);
     }
 
@@ -81,7 +81,7 @@ public class CategoryController {
     public ResponseEntity<Page<VideoResponse>> findAllByCategory(
             @PathVariable UUID idCategory, Pageable pageable) {
         var videos = videoService.findAllVideoByCategory(idCategory, pageable);
-        var videoResponse = videos.map(obj -> videoMapper.convertToResponse(obj));
+        var videoResponse = videos.map(videoMapper::convertToResponse);
         return ResponseEntity.ok(videoResponse);
 
     }
