@@ -48,10 +48,20 @@ test {
 }
 
 jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/dto/**',
+                                        '**/exception/**',
+                                        '**/mappers/**',
+                                        '**/configurations/**',
+                                        '**/repository/**'])
+        }))
+    }
     reports {
         xml.enabled true
     }
 }
+
 test.finalizedBy jacocoTestReport
 
 tasks.named('sonarqube').configure {
