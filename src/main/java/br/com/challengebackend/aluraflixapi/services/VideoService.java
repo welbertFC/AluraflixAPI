@@ -43,7 +43,7 @@ public class VideoService {
                 ObjectNotFoundException::new);
     }
 
-    public Video updateVideo(UUID videoId, VideoRequest videoRequest) {
+    public Video updateVideo(UUID videoId, Video videoRequest) {
         var video = findVideoById(videoId);
         video.update(videoRequest);
         return videoRepository.save(video);

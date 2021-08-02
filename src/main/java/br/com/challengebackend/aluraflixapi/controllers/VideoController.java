@@ -31,6 +31,7 @@ public class VideoController {
     public ResponseEntity<VideoResponse> create(@Valid @RequestBody VideoRequest videoRequest) {
         var video = videoService.createVideo(videoMapper.convertToModel(videoRequest), videoRequest.getCategory());
         var videoResponse = videoMapper.convertToResponse(video);
+        videoResponse.setCategory(video.getCategory().getId());
         var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/{Id}")
@@ -45,10 +46,18 @@ public class VideoController {
             @RequestParam(value = "title", defaultValue = "") String title, Pageable pageable) {
         if (title == null || title.isEmpty()) {
             return ResponseEntity.ok(videoService.findAllVideos(pageable)
-                    .map(videoMapper::convertToResponse));
+                    .map(video -> {
+                        var videoResponse = videoMapper.convertToResponse(video);
+                        videoResponse.setCategory(video.getCategory().getId());
+                        return videoResponse;
+                    }));
         } else {
             return ResponseEntity.ok(videoService.findAllVideosByTitle(title, pageable)
-                    .map(videoMapper::convertToResponse));
+                    .map(video -> {
+                        var videoResponse = videoMapper.convertToResponse(video);
+                        videoResponse.setCategory(video.getCategory().getId());
+                        return videoResponse;
+                    }));
         }
 
     }
@@ -57,6 +66,7 @@ public class VideoController {
     public ResponseEntity<VideoResponse> findById(@PathVariable UUID videoId) {
         var video = videoService.findVideoById(videoId);
         var videoResponse = videoMapper.convertToResponse(video);
+        videoResponse.setCategory(video.getCategory().getId());
         return ResponseEntity.ok(videoResponse);
     }
 
@@ -64,8 +74,9 @@ public class VideoController {
     public ResponseEntity<VideoResponse> updateVideo(
             @PathVariable UUID videoId,
             @Valid @RequestBody VideoRequest videoRequest) {
-        var video = videoService.updateVideo(videoId, videoRequest);
+        var video = videoService.updateVideo(videoId, videoMapper.convertToModel(videoRequest));
         var videoResponse = videoMapper.convertToResponse(video);
+        videoResponse.setCategory(video.getCategory().getId());
         return ResponseEntity.ok(videoResponse);
     }
 

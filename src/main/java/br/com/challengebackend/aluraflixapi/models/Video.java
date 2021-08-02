@@ -37,20 +37,11 @@ public class Video {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-
-    public Video(Video video, VideoRequest videoRequest) {
-        this.id = video.getId();
-        this.title = videoRequest.getTitle();
-        this.description = videoRequest.getDescription();
-        this.url = videoRequest.getUrl();
-        this.createDateTime = video.getCreateDateTime();
-    }
-
     public void generateId() {
         this.id = UUID.randomUUID();
     }
 
-    public void update(VideoRequest videoRequest) {
+    public void update(Video videoRequest) {
         this.title = videoRequest.getTitle();
         this.description = videoRequest.getDescription();
         this.url = videoRequest.getUrl();

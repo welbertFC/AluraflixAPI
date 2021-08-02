@@ -97,27 +97,35 @@ class VideoServiceTest {
 
     @Test
     void shouldUpdateVideo() {
-        var id = randomUUID();
-        var video = Video.builder()
-                .id(id)
+        var videoPersisted = Video.builder()
+                .id(UUID.randomUUID())
+                .title("teste")
                 .description("teste")
+                .url("teste")
+                .category(Category.builder().build())
                 .build();
 
-        var videoRequest = VideoRequest.builder()
-                .description("Teste 2")
+        var video = Video.builder()
+                .id(UUID.randomUUID())
+                .title("teste 2")
+                .description("teste 2")
+                .url("teste 2")
+                .category(Category.builder().build())
                 .build();
 
-        var newVideo = new Video(video, videoRequest);
+        var expected = Video.builder()
+                .id(videoPersisted.getId())
+                .title(video.getTitle())
+                .description(video.getDescription())
+                .url(video.getUrl())
+                .category(videoPersisted.getCategory())
+                .build();
 
-        when(videoRepository.findById(video.getId())).thenReturn(Optional.of(video));
-        when(videoRepository.save(newVideo)).thenReturn(newVideo);
+        when(videoRepository.findById(videoPersisted.getId())).thenReturn(Optional.of(videoPersisted));
 
-        var result = videoService.updateVideo(id, videoRequest);
+        videoService.updateVideo(videoPersisted.getId(), video);
 
-        assertEquals(result, newVideo);
-        assertThat(result.getId(), is(id));
-        assertThat(result.getDescription(), is(videoRequest.getDescription()));
-
+        verify(videoRepository, times(1)).save(expected);
     }
 
     @Test
