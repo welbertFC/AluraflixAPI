@@ -41,14 +41,12 @@ public class Category {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    public Category(Category category, CategoryRequest categoryRequest) {
-        this.id = category.getId();
-        this.title = categoryRequest.getTitle();
-        this.color = categoryRequest.getColor();
-        this.createDateTime = category.getCreateDateTime();
-    }
-
     public void generateId() {
         this.id = UUID.randomUUID();
+    }
+
+    public void update(Category categoryRequest) {
+        this.title = categoryRequest.getTitle();
+        this.color = categoryRequest.getColor();
     }
 }

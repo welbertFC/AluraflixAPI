@@ -9,14 +9,14 @@ public class StandardException<T> implements Serializable {
 
     private Integer status;
     private T message;
-    private String erro;
+    private String error;
     private long timeStamp;
     private String path;
 
-    public StandardException(Integer status, T message, String erro, long timeStamp, String path) {
+    public StandardException(Integer status, T message, String error, long timeStamp, String path) {
         this.status = status;
         this.message = message;
-        this.erro = erro;
+        this.error = error;
         this.timeStamp = timeStamp;
         this.path = path;
     }

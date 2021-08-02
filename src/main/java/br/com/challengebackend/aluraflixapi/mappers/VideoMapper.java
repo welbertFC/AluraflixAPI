@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 public class VideoMapper {
 
     @Autowired
-    private static ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-    public static Video convertToModel(VideoRequest videoRequest) {
+    public Video convertToModel(VideoRequest videoRequest) {
         return modelMapper.map(videoRequest, Video.class);
     }
 
-    public static VideoResponse convertToResponse(Video video) {
+    public VideoResponse convertToResponse(Video video) {
         return modelMapper.map(video, VideoResponse.class);
     }
 

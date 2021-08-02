@@ -21,17 +21,18 @@ import java.util.UUID;
 @RequestMapping("/categorias")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+    private final VideoService videoService;
+    private final CategoryMapper categoryMapper;
+    private final VideoMapper videoMapper;
 
     @Autowired
-    private VideoService videoService;
-
-    @Autowired
-    private CategoryMapper categoryMapper;
-
-    @Autowired
-    private VideoMapper videoMapper;
+    public CategoryController(CategoryService categoryService, VideoService videoService, CategoryMapper categoryMapper, VideoMapper videoMapper) {
+        this.categoryService = categoryService;
+        this.videoService = videoService;
+        this.categoryMapper = categoryMapper;
+        this.videoMapper = videoMapper;
+    }
 
     @PostMapping
     public ResponseEntity<CategoryResponse> insertCategory(
@@ -65,7 +66,7 @@ public class CategoryController {
     @PutMapping("/{idCategory}")
     public ResponseEntity<CategoryResponse> update(@Valid @RequestBody CategoryRequest categoryRequest,
                                                    @PathVariable UUID idCategory) {
-        var category = categoryService.updateCategory(idCategory, categoryRequest);
+        var category = categoryService.updateCategory(idCategory, categoryMapper.convertToModel(categoryRequest));
         var categoryResponse = categoryMapper.convertToResponse(category);
         return ResponseEntity.ok(categoryResponse);
     }

@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 public class CategoryMapper {
 
     @Autowired
-    private static ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-    public static Category convertToModel(CategoryRequest categoryRequest) {
+    public Category convertToModel(CategoryRequest categoryRequest) {
         return modelMapper.map(categoryRequest, Category.class);
     }
 
-    public static CategoryResponse convertToResponse(Category category) {
+    public CategoryResponse convertToResponse(Category category) {
         return modelMapper.map(category, CategoryResponse.class);
     }
 }

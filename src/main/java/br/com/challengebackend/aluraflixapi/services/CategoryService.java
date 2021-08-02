@@ -18,28 +18,28 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category createCategory(Category category){
+    public Category createCategory(Category category) {
         category.generateId();
         return categoryRepository.save(category);
     }
 
-    public Page<Category> findAllCategory(Pageable pageable){
+    public Page<Category> findAllCategory(Pageable pageable) {
 
         return categoryRepository.findAll(pageable);
     }
 
-    public Category findCategoryById(UUID idCategory){
+    public Category findCategoryById(UUID idCategory) {
         return categoryRepository.findById(idCategory)
-                .orElseThrow(() -> new ObjectNotFoundException());
+                .orElseThrow(ObjectNotFoundException::new);
     }
 
-    public Category updateCategory(UUID idCategory, CategoryRequest categoryRequest){
+    public Category updateCategory(UUID idCategory, Category categoryRequest) {
         var category = findCategoryById(idCategory);
-        return categoryRepository.save(
-                new Category(category, categoryRequest));
+        category.update(categoryRequest);
+        return categoryRepository.save(category);
     }
 
-    public void deleteCategory(UUID idCategory){
+    public void deleteCategory(UUID idCategory) {
         var category = findCategoryById(idCategory);
         categoryRepository.delete(category);
     }

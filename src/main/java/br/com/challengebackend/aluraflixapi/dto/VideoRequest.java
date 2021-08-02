@@ -13,14 +13,13 @@ import java.util.UUID;
 public class VideoRequest {
 
 
-    @NotBlank(message = "Campo não pode ser vazio")
-    @NotNull(message = "Campo não pode ser nulo")
+    @NotBlank
     private String title;
 
-    @NotBlank(message = "Campo não pode ser vazio")
-    @NotNull(message = "Campo não pode ser nulo")
+    @NotBlank
     private String description;
 
+    @NotNull
     private UUID category;
 
     @URL

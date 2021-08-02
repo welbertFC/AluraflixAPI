@@ -14,8 +14,6 @@ sonarqube {
     }
 }
 
-
-
 group = 'br.com.ChallengeBackEnd'
 version = '0.2.0'
 sourceCompatibility = '11'

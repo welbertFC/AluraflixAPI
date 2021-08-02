@@ -18,11 +18,14 @@ import java.util.UUID;
 @RequestMapping("/videos")
 public class VideoController {
 
-    @Autowired
-    private VideoService videoService;
+    private final VideoService videoService;
+    private final VideoMapper videoMapper;
 
     @Autowired
-    private VideoMapper videoMapper;
+    public VideoController(VideoService videoService, VideoMapper videoMapper) {
+        this.videoService = videoService;
+        this.videoMapper = videoMapper;
+    }
 
     @PostMapping
     public ResponseEntity<VideoResponse> create(@Valid @RequestBody VideoRequest videoRequest) {
@@ -42,10 +45,10 @@ public class VideoController {
             @RequestParam(value = "title", defaultValue = "") String title, Pageable pageable) {
         if (title == null || title.isEmpty()) {
             return ResponseEntity.ok(videoService.findAllVideos(pageable)
-                    .map(obj -> videoMapper.convertToResponse(obj)));
+                    .map(videoMapper::convertToResponse));
         } else {
             return ResponseEntity.ok(videoService.findAllVideosByTitle(title, pageable)
-                    .map(obj -> videoMapper.convertToResponse(obj)));
+                    .map(videoMapper::convertToResponse));
         }
 
     }

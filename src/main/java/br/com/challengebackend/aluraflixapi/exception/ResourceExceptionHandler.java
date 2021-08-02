@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -17,12 +17,15 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardException<List<String>>> validation(
             MethodArgumentNotValidException e, HttpServletRequest request) {
+        var erros = new HashMap<String, String>();
+
+        e.getFieldErrors().forEach(fieldError -> erros.put(fieldError.getField(),
+                fieldError.getDefaultMessage() != null ? fieldError.getDefaultMessage() : ""));
+
         StandardException<List<String>> error =
                 new StandardException(
                         HttpStatus.BAD_REQUEST.value(),
-                        e.getBindingResult().getAllErrors().stream()
-                                .map(objectError -> objectError.getDefaultMessage())
-                                .collect(Collectors.toList()),
+                        erros,
                         "Erro de validação",
                         Calendar.getInstance().getTimeInMillis(),
                         request.getRequestURI());

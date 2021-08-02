@@ -49,4 +49,10 @@ public class Video {
     public void generateId() {
         this.id = UUID.randomUUID();
     }
+
+    public void update(VideoRequest videoRequest) {
+        this.title = videoRequest.getTitle();
+        this.description = videoRequest.getDescription();
+        this.url = videoRequest.getUrl();
+    }
 }

@@ -14,11 +14,14 @@ import java.util.UUID;
 @Service
 public class VideoService {
 
-    @Autowired
-    private VideoRepository videoRepository;
+    private final VideoRepository videoRepository;
+    private final CategoryService categoryService;
 
     @Autowired
-    private CategoryService categoryService;
+    public VideoService(VideoRepository videoRepository, CategoryService categoryService) {
+        this.videoRepository = videoRepository;
+        this.categoryService = categoryService;
+    }
 
     public Video createVideo(Video video, UUID idCategory) {
         if (idCategory == null) {
@@ -37,13 +40,13 @@ public class VideoService {
 
     public Video findVideoById(UUID videoId) {
         return videoRepository.findById(videoId).orElseThrow(
-                () -> new ObjectNotFoundException());
+                ObjectNotFoundException::new);
     }
 
     public Video updateVideo(UUID videoId, VideoRequest videoRequest) {
         var video = findVideoById(videoId);
-        return videoRepository.save(
-                new Video(video, videoRequest));
+        video.update(videoRequest);
+        return videoRepository.save(video);
     }
 
     public void deleteVideo(UUID videoId) {
