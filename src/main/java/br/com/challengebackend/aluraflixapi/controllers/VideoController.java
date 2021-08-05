@@ -28,7 +28,7 @@ public class VideoController {
     }
 
     @PostMapping
-    public ResponseEntity<VideoResponse> create(@Valid @RequestBody VideoRequest videoRequest) {
+    public ResponseEntity<VideoResponse> insert(@Valid @RequestBody VideoRequest videoRequest) {
         var video = videoService.createVideo(videoMapper.convertToModel(videoRequest), videoRequest.getCategory());
         var videoResponse = videoMapper.convertToResponse(video);
         videoResponse.setCategory(video.getCategory().getId());
@@ -42,7 +42,7 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<VideoResponse>> findAll(
+    public ResponseEntity<Page<VideoResponse>> listAll(
             @RequestParam(value = "title", defaultValue = "") String title, Pageable pageable) {
         if (title == null || title.isEmpty()) {
             return ResponseEntity.ok(videoService.findAllVideos(pageable)
@@ -71,7 +71,7 @@ public class VideoController {
     }
 
     @PutMapping("/{videoId}")
-    public ResponseEntity<VideoResponse> updateVideo(
+    public ResponseEntity<VideoResponse> update(
             @PathVariable UUID videoId,
             @Valid @RequestBody VideoRequest videoRequest) {
         var video = videoService.updateVideo(videoId, videoMapper.convertToModel(videoRequest));
@@ -81,7 +81,7 @@ public class VideoController {
     }
 
     @DeleteMapping("/{videoId}")
-    public ResponseEntity<Void> deleteVideo(@PathVariable UUID videoId) {
+    public ResponseEntity<Void> delete(@PathVariable UUID videoId) {
         videoService.deleteVideo(videoId);
         return ResponseEntity.ok().build();
     }

@@ -7,6 +7,7 @@ import br.com.challengebackend.aluraflixapi.mappers.VideoMapper;
 import br.com.challengebackend.aluraflixapi.models.Category;
 import br.com.challengebackend.aluraflixapi.services.CategoryService;
 import br.com.challengebackend.aluraflixapi.services.VideoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.UUID;
 
@@ -79,6 +81,29 @@ class CategoryControllerTest {
                 .content(json))
                 .andExpect(status().isCreated())
                 .andExpect(content().string(this.mapper.writeValueAsString(categoryResponseExpected)));
+    }
+
+    @Test
+    void shouldReturnOkWhenGetByValidId() throws Exception {
+        var idCategory = UUID.randomUUID();
+        var category = Category.builder()
+                .id(idCategory)
+                .build();
+
+        var categoryResult = CategoryResponse.builder()
+                .id(idCategory)
+                .build();
+
+        when(service.findCategoryById(idCategory)).thenReturn(category);
+
+        var json = mapper.writeValueAsString(categoryResult);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/categorias/{idCategory}", idCategory)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(content().string(json))
+                .andExpect(status().isOk());
     }
 
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryMapper {
 
-
     private static final ModelMapper modelMapper = new ModelMapper();
 
     public static Category convertToModel(CategoryRequest categoryRequest) {

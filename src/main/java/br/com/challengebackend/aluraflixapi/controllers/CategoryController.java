@@ -31,7 +31,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> insertCategory(
+    public ResponseEntity<CategoryResponse> insert(
             @Valid @RequestBody CategoryRequest categoryRequest) {
         var category = categoryService.createCategory(CategoryMapper.convertToModel(categoryRequest));
         var categoryResponse = CategoryMapper.convertToResponse(category);
@@ -74,7 +74,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{idCategory}/videos")
-    public ResponseEntity<Page<VideoResponse>> findAllByCategory(
+    public ResponseEntity<Page<VideoResponse>> listAll(
             @PathVariable UUID idCategory, Pageable pageable) {
         var videos = videoService.findAllVideoByCategory(idCategory, pageable);
         var videoResponse = videos.map(VideoMapper::convertToResponse);
