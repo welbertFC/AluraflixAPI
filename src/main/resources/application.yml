@@ -1,6 +1,13 @@
 spring:
   profiles:
     active: development
+
+  #    jwt:
+  #      secret: ${JWT_SECRET}
+  #      expiration: 60000
+  #      refresh:
+  #        expiration: 86400000
+
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -16,7 +23,12 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     generate-ddl: true
-# Logger configuration
+
+  data:
+    web:
+      pageable:
+        default-page-size: 5
+
 logging:
   pattern:
     console: "%d %-5level %logger : %msg%n"
@@ -26,3 +38,9 @@ logging:
 # Server configuration
 server:
   port: 8080
+
+jwt:
+  expiration: 86400000
+  secret: ${JWT_SECRET}
+  refresh:
+    expiration: 86400000

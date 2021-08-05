@@ -38,7 +38,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation 'com.auth0:java-jwt:3.18.1'
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'

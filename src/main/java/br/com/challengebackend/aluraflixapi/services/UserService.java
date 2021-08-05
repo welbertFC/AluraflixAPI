@@ -46,6 +46,10 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(ObjectNotFoundException::new);
     }
 
+    public UserClient findByEmail(String email){
+        return repository.findByEmail(email);
+    }
+
     public void addProfile(UUID idUser, UUID idProfile) {
         var user = findById(idUser);
         var profile = profileService.findProfileById(idProfile);

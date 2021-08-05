@@ -4,9 +4,6 @@ import br.com.challengebackend.aluraflixapi.dto.LoginRequest;
 import br.com.challengebackend.aluraflixapi.dto.LoginResponse;
 import br.com.challengebackend.aluraflixapi.models.UserClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,8 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -29,6 +25,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JWTUtil jwtUtil;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+        setAuthenticationFailureHandler(new AuthenticationFailureHandler());
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
@@ -50,7 +47,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         var user = (UserClient) authentication.getPrincipal();
         var accessToken = jwtUtil.generateToken(user, request);
         var refreshToken = jwtUtil.generateRefreshToken(user, request);
-        var loginResponse = new LoginResponse("Bearer " + accessToken, "Bearer " + refreshToken);
+        tokenResponse(response, accessToken, refreshToken);
+
+    }
+
+    public static void tokenResponse(HttpServletResponse response, String accessToken, String refreshToken) throws IOException {
+        var loginResponse = new LoginResponse();
+        loginResponse.setAuthorization(accessToken);
+        loginResponse.setRefreshToken(refreshToken);
 
         var json = new ObjectMapper().writeValueAsString(loginResponse);
 
@@ -58,6 +62,28 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType("application/json");
         response.addHeader("access-control-expose-headers", "Authorization");
         response.getWriter().append(json);
+    }
 
+    private class AuthenticationFailureHandler implements org.springframework.security.web.authentication.AuthenticationFailureHandler {
+
+        @Override
+        public void onAuthenticationFailure(
+                HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+                throws IOException, ServletException {
+            response.setStatus(401);
+            response.setContentType("application/json");
+            response.getWriter().append(json());
+        }
+
+        private String json() {
+            long date = new Date().getTime();
+            return "{\"timestamp\": "
+                    + date
+                    + ", "
+                    + "\"status\": 401, "
+                    + "\"erro\": \"Não autorizado\", "
+                    + "\"message\": \"Email ou senha inválidos\", "
+                    + "\"path\": \"/login\"}";
+        }
     }
 }

@@ -61,4 +61,8 @@ public class VideoService {
     public Page<Video> findAllVideosByTitle(String title, Pageable pageable) {
         return videoRepository.findVideoByTitleContains(title, pageable);
     }
+
+    public Page<Video> findFirst5Video(Pageable pageable){
+        return videoRepository.queryFirst10ByOrderByCreateDateTime(pageable);
+    }
 }
