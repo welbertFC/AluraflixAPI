@@ -18,8 +18,8 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
+@Builder
 public class UserClient implements UserDetails {
 
     @Id
@@ -33,7 +33,7 @@ public class UserClient implements UserDetails {
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Profile> profiles = new ArrayList<>();
+    private List<Profile> profiles;
 
     public void generateId() {
         this.id = UUID.randomUUID();
