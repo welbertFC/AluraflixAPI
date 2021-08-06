@@ -62,12 +62,12 @@ class ProfileServiceTest {
 
     @Test
     void shouldFindAnProfileByProfileName() {
-        when(repository.findByProfile(profile.getProfileName())).thenReturn(profile);
+        when(repository.findByProfileName(profile.getProfileName())).thenReturn(profile);
 
         var result = service.findProfileByProfileName(profile.getProfileName());
 
         assertThat(result).isEqualTo(profile);
-        verify(repository, times(1)).findByProfile(profile.getProfileName());
+        verify(repository, times(1)).findByProfileName(profile.getProfileName());
     }
 
     @Test
