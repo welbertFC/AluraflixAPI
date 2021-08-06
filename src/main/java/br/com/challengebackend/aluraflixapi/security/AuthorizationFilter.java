@@ -30,7 +30,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-
     private static String jwtSecret;
 
     @Override

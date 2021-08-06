@@ -2,7 +2,6 @@ package br.com.challengebackend.aluraflixapi.services;
 
 import br.com.challengebackend.aluraflixapi.exception.ObjectNotFoundException;
 import br.com.challengebackend.aluraflixapi.models.Profile;
-import br.com.challengebackend.aluraflixapi.models.UserClient;
 import br.com.challengebackend.aluraflixapi.repository.ProfileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ProfileServiceTest {
+class ProfileServiceTest {
 
     @InjectMocks
     private ProfileService service;
@@ -63,12 +62,12 @@ public class ProfileServiceTest {
 
     @Test
     void shouldFindAnProfileByProfileName() {
-        when(repository.findByProfile(profile.getProfile())).thenReturn(profile);
+        when(repository.findByProfile(profile.getProfileName())).thenReturn(profile);
 
-        var result = service.findProfileByProfileName(profile.getProfile());
+        var result = service.findProfileByProfileName(profile.getProfileName());
 
         assertThat(result).isEqualTo(profile);
-        verify(repository, times(1)).findByProfile(profile.getProfile());
+        verify(repository, times(1)).findByProfile(profile.getProfileName());
     }
 
     @Test
@@ -87,7 +86,7 @@ public class ProfileServiceTest {
     void shouldCreateAnProfile() {
         var newProfile = Profile.builder()
                 .id(null)
-                .profile("ROLE_TEST")
+                .profileName("ROLE_TEST")
                 .build();
 
         service.saveProfile(newProfile);

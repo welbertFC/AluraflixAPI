@@ -35,16 +35,16 @@ public class ProfileService {
                 .orElseThrow(ObjectNotFoundException::new);
     }
 
-    public Profile findProfileByProfileName(String profile) {
-        return repository.findByProfile(profile);
+    public Profile findProfileByProfileName(String profileName) {
+        return repository.findByProfileName(profileName);
     }
 
     private void validationProfile(Profile profile) {
-        if (nonNull(findProfileByProfileName(profile.getProfile()))) {
+        if (nonNull(findProfileByProfileName(profile.getProfileName()))) {
 
             throw new ObjectAlreadyCreatedException("Perfil já criado. Tente atualizá-lo");
         }
-        if (!profile.getProfile().startsWith("ROLE_")) {
+        if (!profile.getProfileName().startsWith("ROLE_")) {
             throw new ArgumentNotValidException("profile deve iniciar com ROLE_");
         }
     }

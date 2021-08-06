@@ -4,11 +4,13 @@ import br.com.challengebackend.aluraflixapi.dto.CategoryRequest;
 import br.com.challengebackend.aluraflixapi.dto.CategoryResponse;
 import br.com.challengebackend.aluraflixapi.models.Category;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryMapper {
+
+    private CategoryMapper() {
+    }
 
     private static final ModelMapper modelMapper = new ModelMapper();
 

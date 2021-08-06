@@ -1,6 +1,5 @@
 package br.com.challengebackend.aluraflixapi.models;
 
-import br.com.challengebackend.aluraflixapi.dto.CategoryRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

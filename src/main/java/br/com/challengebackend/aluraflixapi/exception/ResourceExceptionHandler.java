@@ -18,23 +18,23 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError<Map<String, String>>> validation(
             MethodArgumentNotValidException e, HttpServletRequest request) {
-        var erros = new HashMap<String, String>();
+        var errors = new HashMap<String, String>();
 
-        e.getFieldErrors().forEach(fieldError -> erros.put(fieldError.getField(),
+        e.getFieldErrors().forEach(fieldError -> errors.put(fieldError.getField(),
                 fieldError.getDefaultMessage() != null ? fieldError.getDefaultMessage() : ""));
 
         return ResponseEntity.badRequest().body(new StandardError<>(
                 HttpStatus.BAD_REQUEST.value(),
-                erros,
+                errors,
                 "Erro de validação",
                 Calendar.getInstance().getTimeInMillis(),
                 request.getRequestURI()));
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandardError> objectNotFound(
+    public ResponseEntity<StandardError<String>> objectNotFound(
             ObjectNotFoundException e, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardError(
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardError<>(
                 HttpStatus.NOT_FOUND.value(),
                 "Object not found",
                 e.getMessage(),
@@ -43,9 +43,9 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<StandardError> accessDenied(
+    public ResponseEntity<StandardError<String>> accessDenied(
             AccessDeniedException e, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardError(
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new StandardError<>(
                 HttpStatus.NOT_FOUND.value(),
                 "Access Denied",
                 e.getMessage(),
@@ -54,9 +54,9 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(ArgumentNotValidException.class)
-    public ResponseEntity<StandardError> argumentInvalid(
+    public ResponseEntity<StandardError<String>> argumentInvalid(
             ArgumentNotValidException e, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new StandardError(
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new StandardError<>(
                 HttpStatus.CONFLICT.value(),
                 "Argument Not Valid",
                 e.getMessage(),
@@ -65,9 +65,9 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(ObjectAlreadyCreatedException.class)
-    public ResponseEntity<StandardError> alreadyCreated(
+    public ResponseEntity<StandardError<String>> alreadyCreated(
             ObjectAlreadyCreatedException e, HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StandardError(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StandardError<>(
                 HttpStatus.BAD_REQUEST.value(),
                 "Already Created",
                 e.getMessage(),

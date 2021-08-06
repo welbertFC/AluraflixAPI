@@ -18,7 +18,7 @@ public class Profile {
 
     @Id
     private UUID id;
-    private String profile;
+    private String profileName;
 
     public void generateId() {
         this.id = UUID.randomUUID();

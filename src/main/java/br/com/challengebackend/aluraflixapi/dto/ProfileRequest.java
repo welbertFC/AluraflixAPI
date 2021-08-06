@@ -8,5 +8,5 @@ import javax.validation.constraints.NotBlank;
 public class ProfileRequest {
 
     @NotBlank
-    private String profile;
+    private String profileName;
 }

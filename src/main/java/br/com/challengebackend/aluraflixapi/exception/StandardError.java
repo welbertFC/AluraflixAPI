@@ -2,10 +2,8 @@ package br.com.challengebackend.aluraflixapi.exception;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
-public class StandardError<T> implements Serializable {
+public class StandardError<T> {
 
     private Integer status;
     private T message;

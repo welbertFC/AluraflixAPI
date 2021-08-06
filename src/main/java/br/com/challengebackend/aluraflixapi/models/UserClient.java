@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +42,7 @@ public class UserClient implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        profiles.forEach(profile -> authorities.add(new SimpleGrantedAuthority(profile.getProfile())));
+        profiles.forEach(profile -> authorities.add(new SimpleGrantedAuthority(profile.getProfileName())));
         return authorities;
     }
 

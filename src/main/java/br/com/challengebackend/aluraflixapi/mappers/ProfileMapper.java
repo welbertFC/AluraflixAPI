@@ -3,13 +3,14 @@ package br.com.challengebackend.aluraflixapi.mappers;
 import br.com.challengebackend.aluraflixapi.dto.ProfileRequest;
 import br.com.challengebackend.aluraflixapi.dto.ProfileResponse;
 import br.com.challengebackend.aluraflixapi.models.Profile;
-import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
 public class ProfileMapper {
+
+    private ProfileMapper() {
+    }
 
     private static final ModelMapper mapper = new ModelMapper();
 

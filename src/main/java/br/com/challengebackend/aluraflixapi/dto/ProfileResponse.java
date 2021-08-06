@@ -8,5 +8,5 @@ import java.util.UUID;
 public class ProfileResponse {
 
     private UUID id;
-    private String profile;
+    private String profileName;
 }

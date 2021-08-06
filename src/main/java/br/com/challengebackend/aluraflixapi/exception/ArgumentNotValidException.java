@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ArgumentNotValidException extends RuntimeException {
 
-    public ArgumentNotValidException(String msg){
+    public ArgumentNotValidException(String msg) {
         super(msg);
     }
 
