@@ -1,6 +1,5 @@
 package br.com.challengebackend.aluraflixapi.services;
 
-import br.com.challengebackend.aluraflixapi.dto.CategoryRequest;
 import br.com.challengebackend.aluraflixapi.exception.ObjectNotFoundException;
 import br.com.challengebackend.aluraflixapi.models.Category;
 import br.com.challengebackend.aluraflixapi.repository.CategoryRepository;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
 
 @Service
 public class CategoryService {

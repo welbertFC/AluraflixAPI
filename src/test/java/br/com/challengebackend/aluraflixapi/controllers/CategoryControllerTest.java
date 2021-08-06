@@ -7,7 +7,6 @@ import br.com.challengebackend.aluraflixapi.mappers.VideoMapper;
 import br.com.challengebackend.aluraflixapi.models.Category;
 import br.com.challengebackend.aluraflixapi.services.CategoryService;
 import br.com.challengebackend.aluraflixapi.services.VideoService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.UUID;
 
-import static java.util.Collections.singletonList;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CategoryController.class)
 class CategoryControllerTest {
@@ -100,7 +97,7 @@ class CategoryControllerTest {
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/categorias/{idCategory}", idCategory)
-                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(content().string(json))
                 .andExpect(status().isOk());

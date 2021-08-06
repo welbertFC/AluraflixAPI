@@ -1,6 +1,5 @@
 package br.com.challengebackend.aluraflixapi.services;
 
-import br.com.challengebackend.aluraflixapi.dto.VideoRequest;
 import br.com.challengebackend.aluraflixapi.exception.ObjectNotFoundException;
 import br.com.challengebackend.aluraflixapi.models.Video;
 import br.com.challengebackend.aluraflixapi.repository.VideoRepository;
@@ -62,7 +61,7 @@ public class VideoService {
         return videoRepository.findVideoByTitleContains(title, pageable);
     }
 
-    public Page<Video> findFirst5Video(Pageable pageable){
-        return videoRepository.queryFirst10ByOrderByCreateDateTime(pageable);
+    public Page<Video> findFirst5Video(Pageable pageable) {
+        return videoRepository.queryFirst5ByOrderByCreateDateTime(pageable);
     }
 }

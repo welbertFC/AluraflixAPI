@@ -2,8 +2,10 @@ package br.com.challengebackend.aluraflixapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +19,16 @@ import java.util.UUID;
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class UserClient implements UserDetails {
 
     @Id
     private UUID id;
+
+    @Column(unique = true)
     private String name;
+
     private String email;
     private String password;
 

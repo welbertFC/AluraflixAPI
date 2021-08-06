@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.UUID;
 
@@ -36,16 +35,16 @@ public class ProfileService {
                 .orElseThrow(ObjectNotFoundException::new);
     }
 
-    public Profile findProfileByProfileName(String profile){
+    public Profile findProfileByProfileName(String profile) {
         return repository.findByProfile(profile);
     }
 
     private void validationProfile(Profile profile) {
-        if (nonNull(findProfileByProfileName(profile.getProfile()))){
+        if (nonNull(findProfileByProfileName(profile.getProfile()))) {
 
             throw new ObjectAlreadyCreatedException("Perfil já criado. Tente atualizá-lo");
         }
-        if (!profile.getProfile().startsWith("ROLE_")){
+        if (!profile.getProfile().startsWith("ROLE_")) {
             throw new ArgumentNotValidException("profile deve iniciar com ROLE_");
         }
     }

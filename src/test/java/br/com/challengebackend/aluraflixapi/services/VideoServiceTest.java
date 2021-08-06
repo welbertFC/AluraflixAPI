@@ -1,6 +1,5 @@
 package br.com.challengebackend.aluraflixapi.services;
 
-import br.com.challengebackend.aluraflixapi.dto.VideoRequest;
 import br.com.challengebackend.aluraflixapi.exception.ObjectNotFoundException;
 import br.com.challengebackend.aluraflixapi.models.Category;
 import br.com.challengebackend.aluraflixapi.models.Video;
@@ -179,5 +178,17 @@ class VideoServiceTest {
         videoService.deleteVideo(video.getId());
 
         verify(videoRepository, Mockito.times(1)).delete(video);
+    }
+
+    @Test
+    void shouldFindTop5Videos() {
+        final var pageable = PageRequest.of(20, 20);
+
+        when(videoRepository.queryFirst5ByOrderByCreateDateTime(pageable)).thenReturn(Page.empty());
+
+        videoService.findFirst5Video(pageable);
+
+        verify(videoRepository, times(1))
+                .queryFirst5ByOrderByCreateDateTime(pageable);
     }
 }

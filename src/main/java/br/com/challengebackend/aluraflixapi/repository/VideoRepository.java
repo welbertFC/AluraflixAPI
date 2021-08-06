@@ -16,6 +16,6 @@ public interface VideoRepository extends JpaRepository<Video, UUID> {
 
     Page<Video> findVideoByTitleContains(String title, Pageable pageable);
 
-    Page<Video> queryFirst10ByOrderByCreateDateTime(Pageable pageable);
+    Page<Video> queryFirst5ByOrderByCreateDateTime(Pageable pageable);
 }
 

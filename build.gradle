@@ -59,7 +59,8 @@ jacocoTestReport {
                                         '**/exception/**/*',
                                         '**/mappers/**/*',
                                         '**/configurations/**/*',
-                                        '**/repository/**/*'])
+                                        '**/repository/**/*',
+                                        '**/controllers/**'])
         }))
     }
     reports {
