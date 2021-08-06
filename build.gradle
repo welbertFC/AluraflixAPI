@@ -55,15 +55,15 @@ test {
 jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['**/br.com.challengebackend.aluraflixapi.security/**',
-                                        '**/br.com.challengebackend.aluraflixapi.controllers/**',
-                                        '**/mappers/**/*',
-                                        '**/configurations/**/*',
-                                        '**/repository/**/*',
-                                        '**/controllers/**/*',
-                                        '**/exception/**/*',
-                                        '**/mappers/**/*',
-                                        '**/security/**/*'])
+            fileTree(dir: it, exclude: ['br.com.challengebackend.aluraflixapi.security/**',
+                                        'br.com.challengebackend.aluraflixapi.controllers/**',
+                                        '**/mappers**',
+                                        '**/configurations**',
+                                        '**/repository**',
+                                        '**/controllers**',
+                                        '**/exception**',
+                                        '**/mappers**',
+                                        '**/security**'])
         }))
     }
     reports {
