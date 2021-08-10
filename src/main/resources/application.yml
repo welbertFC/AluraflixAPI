@@ -29,7 +29,7 @@ logging:
     console: "%d %-5level %logger : %msg%n"
   level:
     org.springframework: info
-    org.hibernate: off
+    org.hibernate: debug
 
 # Server configuration
 server:
