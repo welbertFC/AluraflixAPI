@@ -50,6 +50,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    jacoco {
+        excludes += ['mappers/**',
+                     'configurations/**',
+                     '**/controllers**',
+                     '**/exception**',
+                     '**/security**',
+                     'br.com.challengebackend.aluraflixapi.controllers/**']
+    }
 }
 
 jacocoTestReport {
@@ -60,7 +68,7 @@ jacocoTestReport {
                                         '**/mappers**',
                                         '**/configurations**',
                                         '**/repository**',
-                                        '**/controllers**',
+                                        '**/controllers/**',
                                         '**/exception**',
                                         '**/mappers**',
                                         '**/security**'])

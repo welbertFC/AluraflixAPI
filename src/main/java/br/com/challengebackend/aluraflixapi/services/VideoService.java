@@ -4,6 +4,7 @@ import br.com.challengebackend.aluraflixapi.exception.ObjectNotFoundException;
 import br.com.challengebackend.aluraflixapi.models.Video;
 import br.com.challengebackend.aluraflixapi.repository.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class VideoService {
     private final VideoRepository videoRepository;
     private final CategoryService categoryService;
 
+    @Value("${DEFAULT_CATEGORY}")
+    private UUID defaultCategory;
+
     @Autowired
     public VideoService(VideoRepository videoRepository, CategoryService categoryService) {
         this.videoRepository = videoRepository;
@@ -24,8 +28,7 @@ public class VideoService {
 
     public Video createVideo(Video video, UUID idCategory) {
         if (idCategory == null) {
-            video.setCategory(categoryService.findCategoryById(
-                    UUID.fromString("8ad8cc39-9feb-4817-a004-5a40d5efed51")));
+            video.setCategory(categoryService.findCategoryById(defaultCategory));
         } else {
             video.setCategory(categoryService.findCategoryById(idCategory));
         }

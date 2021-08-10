@@ -2,12 +2,6 @@ spring:
   profiles:
     active: development
 
-  #    jwt:
-  #      secret: ${JWT_SECRET}
-  #      expiration: 60000
-  #      refresh:
-  #        expiration: 86400000
-
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -39,8 +33,12 @@ logging:
 server:
   port: 8080
 
+default:
+  category: ${DEFAULT_CATEGORY}
+
+
 jwt:
-  expiration: 30000
+  expiration: 18000000
   secret: ${JWT_SECRET:ThWmZq4t7w!z%C&F)J@NcRfUjXn2r5u8}
   refresh:
     expiration: 86400000
