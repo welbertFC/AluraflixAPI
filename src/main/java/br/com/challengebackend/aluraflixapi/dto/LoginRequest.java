@@ -9,5 +9,5 @@ public class LoginRequest {
 
     @Email
     private String email;
-    private String senha;
+    private String password;
 }
