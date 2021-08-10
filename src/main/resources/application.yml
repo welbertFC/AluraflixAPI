@@ -5,9 +5,9 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/aluraflix}
+    username: ${JDBC_DATABASE_USERNAME:postgres}
+    password: ${JDBC_DATABASE_PASSWORD:P@ssw0rd}
 
   # JPA properties
   jpa:
@@ -41,6 +41,6 @@ default:
 
 jwt:
   expiration: 18000000
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:ThWmZq4t7w!z%C&F)J@NcRfUjXn2r5u8}
   refresh:
     expiration: 86400000
