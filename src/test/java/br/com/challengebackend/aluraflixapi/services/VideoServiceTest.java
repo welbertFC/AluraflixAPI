@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +40,9 @@ class VideoServiceTest {
 
     @Mock
     private CategoryService categoryService;
+
+    @Value("${DEFAULT_CATEGORY}")
+    private UUID defaultCategory;
 
     private Video video;
 
@@ -83,10 +87,10 @@ class VideoServiceTest {
 
     @Test
     void shouldCreatedNewVideoWithCategoryIdNull() {
-        var category = Category.builder().id(UUID.fromString("8ad8cc39-9feb-4817-a004-5a40d5efed51")).build();
+        var category = Category.builder().id(randomUUID()).build();
 
         when(videoRepository.save(video)).thenReturn(video);
-        when(categoryService.findCategoryById(category.getId())).thenReturn(category);
+        when(categoryService.findCategoryById(defaultCategory)).thenReturn(category);
 
         var result = videoService.createVideo(video, null);
 
