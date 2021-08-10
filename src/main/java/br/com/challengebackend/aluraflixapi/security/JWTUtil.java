@@ -18,14 +18,11 @@ import java.util.stream.Collectors;
 @Component
 public class JWTUtil {
 
-    @Value("${JWT_SECRET}")
-    private String jwtSecret;
+    private static String jwtSecret;
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
+    private static Long expiration;
 
-    @Value("${jwt.refresh.expiration}")
-    private Long expirationRefreshToken;
+    private static Long expirationRefreshToken;
 
     public String generateToken(UserClient user, HttpServletRequest request) {
         var algorithm = Algorithm.HMAC256(jwtSecret.getBytes(StandardCharsets.UTF_8));
@@ -69,4 +66,18 @@ public class JWTUtil {
 
     }
 
+    @Value("${JWT_SECRET}")
+    public void setJwtSecret(String jwtSecret) {
+        this.jwtSecret = jwtSecret;
+    }
+
+    @Value("${jwt.expiration}")
+    public void setExpiration(Long expiration) {
+        this.expiration = expiration;
+    }
+
+    @Value("${jwt.refresh.expiration}")
+    public void setExpirationRefreshToken(Long expirationRefreshToken) {
+        this.expirationRefreshToken = expirationRefreshToken;
+    }
 }
