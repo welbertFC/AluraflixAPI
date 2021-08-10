@@ -68,7 +68,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         throw new AccessDeniedException("Access Denied");
     }
 
-    @Value("${JWT_SECRET}")
+    @Value("${jwt.secret}")
     public void setJwtSecret(String js) {
         jwtSecret = js;
     }

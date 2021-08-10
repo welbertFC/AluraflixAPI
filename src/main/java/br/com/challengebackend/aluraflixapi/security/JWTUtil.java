@@ -66,7 +66,7 @@ public class JWTUtil {
 
     }
 
-    @Value("${JWT_SECRET}")
+    @Value("${jwt.secret}")
     public void setJwtSecret(String jwtSecret) {
         this.jwtSecret = jwtSecret;
     }
