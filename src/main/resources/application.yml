@@ -5,9 +5,9 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/aluraflix}
-    username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:P@ssw0rd}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/aluraflix}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:P@ssw0rd}
 
   # JPA properties
   jpa:
@@ -23,6 +23,9 @@ spring:
     web:
       pageable:
         default-page-size: 5
+Dspring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/aluraflix}
 
 logging:
   pattern:
