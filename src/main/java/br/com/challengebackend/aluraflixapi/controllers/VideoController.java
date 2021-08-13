@@ -71,7 +71,7 @@ public class VideoController {
     }
 
     @GetMapping("/free")
-    @ApiOperation(value = "Find top 10 videos")
+    @ApiOperation(value = "Find top 5 videos")
     public ResponseEntity<Page<VideoResponse>> findFirst5(Pageable pageable) {
         var video = videoService.findFirst5Video(pageable);
         return ResponseEntity.ok(video.map(VideoMapper::convertToResponse));
